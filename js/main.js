@@ -114,12 +114,10 @@ function showResults(results){
     let detailsSection=document.createElement('section')
     detailsSection.classList.add('details')
     let testParagraph = document.createElement('p')
-    let testNode = document.createTextNode('cddddddddd')
+    let testNode = document.createTextNode('')
     testParagraph.appendChild(testNode)
     detailsSection.appendChild(testParagraph)
     movieDetailsSec.appendChild(detailsSection)
-
-
 
     //result information
     let movieTitle = document.createElement('h3')
@@ -133,13 +131,8 @@ function showResults(results){
     nominateButton.appendChild(nominateButtonNode)
     nominateButton.classList.add(`nominate${i}`)
     nominateButton.addEventListener("click", nominateSelection)
-    // let arrowButton = document.createElement('p')
-    // arrowButton.innerHTML = `&nabla;`
-    // arrowButton.classList.add('arrow')
-    // arrowButton.appendChild(arrowButtonNode)
 
     buttonSection.appendChild(nominateButton)
-    // buttonSection.appendChild(arrowButton)
 
     movieHeaderSec.appendChild(movieTitle)
     movieHeaderSec.appendChild(buttonSection)
@@ -150,50 +143,7 @@ function showResults(results){
 
     resultsList.appendChild(listItem)
 
-
-    // addMovieDetails();
-
-    // let actors = document.createElement('');
-    // let director = document.createElement('');
-    // let plot = document.createElement('');
-    // let poster = document.createElement('');
-    // let production = document.createElement('');
-    // let rated = document.createElement('');
-    // let country = document.createElement('');
-    // let releaseDate = document.createElement('');
-    // let runtime = document.createElement('');
-    // let writers = document.createElement('');
-    // let imdbID = document.createElement('');
-    // let imbdRating = document.createElement('');
-    // actors
-    // director
-    // plot
-    // poster
-    // production
-    // rated
-    // country
-    // releaseDate
-    // runtime
-    // writers
-    // imdbID
-    // imbdRating
-    //
-    //
-    // actors.classList.add('')
-    // director.classList.add('')
-    // plot.classList.add('')
-    // poster.classList.add('')
-    // production.classList.add('')
-    // rated.classList.add('')
-    // country.classList.add('')
-    // releaseDate.classList.add('')
-    // runtime.classList.add('')
-    // writers.classList.add('')
-    // imdbID.classList.add('')
-    // imbdRating.classList.add('')
-
   });
-
 
 }
 
