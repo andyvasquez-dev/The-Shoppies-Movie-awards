@@ -27,6 +27,9 @@ h1{
   margin-bottom: 1rem;
   font-size: 5.5rem;
 }
+h3{
+  display: inline-block;
+}
 
 .inputSection{
   width: 100%;
@@ -89,15 +92,14 @@ p{
   padding-top: 1.55rem;
   display: flex;
 }
+.results li{
+  flex-direction: column;
+}
 .nominations li h3, .results li h3{
   font-size: 2rem;
   padding-top: .6rem;
 }
 
-.movieTitletitle{
-  display:block;
-  width
-}
 button{
   padding:.6rem 1rem .6rem 1rem;
   border:1px solid rgba(233,234,235,1);
@@ -122,10 +124,7 @@ li{
 .nominations li{
   margin-left: 1rem;
 }
-.resultsList li{
-  display: flex;
-  justify-content: space-between;
-}
+
 .arrow{
   display: inline-block;
   font-size: 2rem;
@@ -157,6 +156,7 @@ button, .arrow:hover{
   display: flex;
   justify-content: center;
   align-content: center;
+  padding-top: 2.3rem;
 }
 .nominationTitle{
   margin-left: .7rem;
@@ -174,8 +174,55 @@ button, .arrow:hover{
 .submitButton{
   font-size:2.5rem;
   padding: 2.2rem;
-  margin-top: 2rem;
+  margin-top: 4rem;
 }
 .hidden{
   display: none;
+}
+
+
+/* sliding more info animation */
+.movieItem{
+  position: relative;
+}
+
+.movieHeader{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 4rem;
+  margin-bottom: 1rem;
+}
+.movieHeader::after{
+  content:"\25BC";
+  font-size: 1.6rem;
+  position: absolute;
+  right: 1rem;
+  /* background-color: blue; */
+  padding-top: .66rem;
+  transition: transform 0.23s ease-in-out;
+}
+
+.movieHeader.active::after{
+  transform:rotate(-180deg);
+}
+.movieDetails{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.details{
+  padding: 1rem;
+  line-height: 1.5rem;
+  border-top: 2px solid;
+  border-image:linear-gradient(to right, transparent, rgba(233,234,235,1), transparent)1;
+}
+/* .movieHeader.active + .movieDetails{
+
+} */
+
+@media(max-width:767px){
+  html{
+    font-size: 14px;
+  }
 }

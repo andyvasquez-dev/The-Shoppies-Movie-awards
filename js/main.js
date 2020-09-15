@@ -5,21 +5,23 @@ let buttons = document.querySelector('button')
 let nominationCount = 0;
 let nominations = []
 
+document.addEventListener('DOMContentLoaded', getLocalNominations);
+
 function fullBallot(){
   document.querySelector('#complete').classList.toggle("hidden");
-  console.log('ballot');
 }
 
 function removeSelection(e){
-  // let currentResultList = Object.entries(document.querySelectorAll('.resultsList'))
   let movieTitle = e.target.previousSibling.textContent
+  removeLocalNominations(movieTitle);
   let currentResultList = document.querySelector('.resultsList').children
 
   for(let i = 0; i < currentResultList.length; i++){
-    if(currentResultList[`${i}`].id){
-      if(currentResultList[`${i}`].innerHTML.includes(movieTitle)){
-        currentResultList[`${i}`].childNodes[1].firstChild.classList.remove('opacity')
-        currentResultList[`${i}`].id=""
+    console.log(currentResultList[i].firstChild);
+    if(currentResultList[i].firstChild.id){
+      if(currentResultList[i].firstChild.innerHTML.includes(movieTitle)){
+        currentResultList[i].firstChild.childNodes[1].firstChild.classList.remove('opacity')
+        currentResultList[i].firstChild.id=""
       }
     }
   }
@@ -46,19 +48,15 @@ function nominateSelection(e){
   let currentNominationList = document.querySelector('#nominations').children
 
   if (nominationCount<=4 && (!nominations.includes(e.target.parentElement.parentElement.firstChild.textContent))){
-    console.log(e.target.parentElement.parentElement.firstChild.textContent);
-    console.log(!nominations.includes(e.target.parentElement.parentElement.firstChild.textContent));
     nominations.push(e.target.parentElement.parentElement.firstChild.textContent)
-    console.log(!nominations.includes(e.target.parentElement.parentElement.firstChild.textContent));
 
-    console.log(nominations);
     e.target.classList.add('opacity');
-    // let nominationNumber = e.target.classList.value
+
     let listItem = document.createElement('li')
     let movieSelection = document.createElement('h3')
     movieSelection.textContent = e.target.parentElement.previousSibling.textContent
     e.target.parentElement.parentElement.id= `${nominationCount}`
-    console.log(e.target.parentElement.parentElement.id);
+    saveLocalNomination(e.target.parentElement.previousSibling.textContent);
 
     let removeButton = document.createElement('button')
     let removeButtonNode = document.createTextNode('Remove')
@@ -69,59 +67,91 @@ function nominateSelection(e){
     listItem.appendChild(removeButton)
     nominationList.appendChild(listItem)
 
-
-
     nominationCount++;
     document.querySelector('.countdown').textContent = `${5-nominationCount} votes left!`
     if (nominationCount===5){
       fullBallot();
     }
-
   }
-
-
 }
 
-
 function showResults(results){
-  //dom stuff
+  //dom stuff...., reveals output section
   document.querySelector('#output').classList.remove('hidden')
 
   inputSearch.textContent = `Results for... "${titleInput.value}"`
+  titleInput.value="";
 
   results=results.sort( (a, b) => b.year - a.year)
   // console.log(results);
 
     // console.log(results[0])
     results.forEach((item, i) => {
-
     let listItem = document.createElement('li')
+    listItem.classList.add('movieItem')
+
+    //drop down
+    let movieHeaderSec=document.createElement('section')
+    movieHeaderSec.classList.add('movieHeader')
+    // more info drop down
+    movieHeaderSec.addEventListener('click', e=>{
+      if(true){
+        // console.log(e.target== `<button class="nominate${i} opacity">Nominate</button>`);
+        // console.log(e.target);
+        movieHeaderSec.classList.toggle("active")
+        const movieDetails = movieHeaderSec.nextElementSibling;
+        if (movieHeaderSec.classList.contains('active')){
+          movieDetails.style.maxHeight = movieDetails.scrollHeight + "px"; //
+        }
+        else{
+          movieDetails.style.maxHeight = 0;
+        }
+      }
+
+    })
+    let movieDetailsSec=document.createElement('section')
+    movieDetailsSec.classList.add('movieDetails')
+    let detailsSection=document.createElement('section')
+    detailsSection.classList.add('details')
+    let testParagraph = document.createElement('p')
+    let testNode = document.createTextNode('cddddddddd')
+    testParagraph.appendChild(testNode)
+    detailsSection.appendChild(testParagraph)
+    movieDetailsSec.appendChild(detailsSection)
+
+
+
+    //result information
     let movieTitle = document.createElement('h3')
     movieTitle.classList.add(`nominate${i}`)
+    movieTitle.classList.add('movieTitle')
     let movieNode = document.createTextNode(`${item.movieTitle}  (${item.year})`);
     movieTitle.appendChild(movieNode)
-    movieTitle.classList.add('movieTitle')
     let buttonSection = document.createElement('section')
     let nominateButton = document.createElement('button')
     let nominateButtonNode = document.createTextNode('Nominate')
     nominateButton.appendChild(nominateButtonNode)
     nominateButton.classList.add(`nominate${i}`)
-    let arrowButton = document.createElement('p')
-    arrowButton.innerHTML = `&nabla;`
-    arrowButton.classList.add('arrow')
+    nominateButton.addEventListener("click", nominateSelection)
+    // let arrowButton = document.createElement('p')
+    // arrowButton.innerHTML = `&nabla;`
+    // arrowButton.classList.add('arrow')
     // arrowButton.appendChild(arrowButtonNode)
 
     buttonSection.appendChild(nominateButton)
-    buttonSection.appendChild(arrowButton)
+    // buttonSection.appendChild(arrowButton)
 
-    listItem.appendChild(movieTitle)
-    listItem.appendChild(buttonSection)
+    movieHeaderSec.appendChild(movieTitle)
+    movieHeaderSec.appendChild(buttonSection)
+
+    listItem.appendChild(movieHeaderSec)
+    listItem.appendChild(movieDetailsSec)
+
 
     resultsList.appendChild(listItem)
 
-    nominateButton.addEventListener("click", nominateSelection)
 
-
+    // addMovieDetails();
 
     // let actors = document.createElement('');
     // let director = document.createElement('');
@@ -168,7 +198,7 @@ function showResults(results){
 }
 
 function movieSearch(){ // bring back all matches dating back to 2000
-  const yearCheckEnd = 1995
+  const yearCheckEnd = 2014
   const currentYear = 2020
   const searchResults = []
 
@@ -183,12 +213,16 @@ function movieSearch(){ // bring back all matches dating back to 2000
     title=title.replace(" ", `+`)
   }
 
-    // brings back matches from each year starting at `1965`
+    // brings back matches from each year ending at yearcheckend`
   for (let i= currentYear; i >= yearCheckEnd; i-- ){
-    fetch(`http://www.omdbapi.com/?apikey=c2d156e8&t=${title}&y=${i}`)
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    // fetch(proxyurl+`http://www.omdbapi.com/?s=${title}&apikey=`)
+    //proxyurl+ below
+    fetch(proxyurl + `https://www.omdbapi.com/?apikey=8ce696ca&t=${title}&y=${i}`)
       .then(response=>response.json())
       .then(data=>{
         // console.log(data);
+
         counter++
         if ( data.Response!== "False"){
           // if(data.Poster !== 'N/A'){
@@ -216,6 +250,72 @@ function movieSearch(){ // bring back all matches dating back to 2000
         }
       })
   }
+}
+
+function getLocalNominations(){
+
+  let nominations;
+  if(localStorage.getItem('nominations') === null){ // if nothing with 'nominations exist then create an empty array'
+    nominations = [];
+  }
+  else{
+    nominations = JSON.parse(localStorage.getItem('nominations'))
+  }
+  if (nominations.length>0) {
+    document.querySelector('#output').classList.remove('hidden')
+  }
+  nominations.forEach((nomination, i) => {
+
+    //counter
+    nominationCount = nominations.length;
+    document.querySelector('.countdown').textContent = `${5-nominationCount} votes left!`
+
+    let listItem = document.createElement('li')
+    let movieSelection = document.createElement('h3')
+    movieSelection.textContent = nomination
+
+
+    let removeButton = document.createElement('button')
+    let removeButtonNode = document.createTextNode('Remove')
+    removeButton.appendChild(removeButtonNode)
+    removeButton.addEventListener('click',removeSelection)
+
+    listItem.appendChild(movieSelection);
+    listItem.appendChild(removeButton)
+    nominationList.appendChild(listItem)
+
+    if (nominationCount===5){
+      fullBallot();
+    }
+  });
+
+
+}
+
+function removeLocalNominations(nomination){
+  let nominations;
+  if(localStorage.getItem('nominations') === null){ // if nothing with 'nominations exist then create an empty array'
+    nominations = [];
+  }
+  else{
+    nominations = JSON.parse(localStorage.getItem('nominations'))
+  }
+  const nominationIndex = nomination;
+  nominations.splice(nominations.indexOf(nominationIndex), 1)
+  localStorage.setItem('nominations', JSON.stringify(nominations)) // saves nomination array as 'nominations'
+
+}
+
+function saveLocalNomination(nomination){
+  let nominations;
+  if(localStorage.getItem('nominations') === null){ // if nothing with 'nominations exist then create an empty array'
+    nominations = [];
+  }
+  else{
+    nominations = JSON.parse(localStorage.getItem('nominations'))
+  }
+  nominations.push(nomination);
+  localStorage.setItem('nominations', JSON.stringify(nominations)) // saves nomination array as 'nominations'
 }
 
 titleInput.addEventListener('keyup', (e) => {
