@@ -218,7 +218,7 @@ function movieSearch(){ // bring back all matches dating back to 2000
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     // fetch(proxyurl+`http://www.omdbapi.com/?s=${title}&apikey=`)
     //proxyurl+ below
-    fetch(proxyurl + `https://www.omdbapi.com/?apikey=8ce696ca&t=${title}&y=${i}`)
+    fetch(proxyurl +`https://www.omdbapi.com/?apikey=8ce696ca&t=${title}&y=${i}`)
       .then(response=>response.json())
       .then(data=>{
         // console.log(data);
