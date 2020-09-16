@@ -166,7 +166,7 @@ function movieSearch(){ // bring back all matches dating back to 1995
   document.querySelector('#output').classList.remove('hidden')
     document.querySelector('.loader').style.display='flex'
   // }
-  const yearCheckEnd = 1995
+  const yearCheckEnd = 2005
   const currentYear = 2020
   const searchResults = []
 
