@@ -166,7 +166,7 @@ function movieSearch(){ // bring back all matches dating back to 1995
   document.querySelector('#output').classList.remove('hidden')
     document.querySelector('.loader').style.display='flex'
   // }14
-  const yearCheckEnd = 2015
+  const yearCheckEnd = 2000
   const currentYear = 2020
   const searchResults = []
 
@@ -182,11 +182,10 @@ function movieSearch(){ // bring back all matches dating back to 1995
   }
 
     // brings back matches from each year ending at yearcheckend`
-  for (let i= currentYear; i >= yearCheckEnd; i-- ){
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     // fetch(proxyurl+`http://www.omdbapi.com/?s=${title}&apikey=`)
     //proxyurl+ below
-    fetch(proxyurl + `www.omdbapi.com/?apikey=3a3e941d=${title}&y=${i}`)
+    fetch(proxyurl+`www.omdbapi.com/?apikey=c2d156e8&s=${title}`)
       .then(response=>response.json())
       .then(data=>{
         console.log(data);
@@ -196,32 +195,25 @@ function movieSearch(){ // bring back all matches dating back to 1995
         counter++
         if ( data.Response!== "False"){
           // if(data.Poster !== 'N/A'){
+          data['Search'].forEach((search, i) => {
             searchResults.push({
-              year : parseInt(data.Year),
-              movieTitle : data.Title,
-              actors : data.Actors,
-              directors : data.Director,
-              genre : data.Genre,
-              plot : data.Plot,
-              poster : data.Poster,
-              production : data.Production,
-              rated : data.Rated,
-              country : data.Country,
-              releaseDate: data.Released,
-              runtime : data.Runtime,
-              writers : data.Writer,
-              imdbID : data.imdbID,
-              imbdRating : data.imdbRating
+              year : parseInt(search.Year),
+              movieTitle : search.Title,
+              poster : search.Poster,
+              type : search.Type,
+              imdbID : search.imdbID
             })
+          });
+
+
           // }
           document.querySelector('.nothingFound').style.display='none';
-        }
-        if (counter===(currentYear-yearCheckEnd)){
           showResults(searchResults);
         }
+
       })
 
-  }
+
 }
 
 function getLocalNominations(){
