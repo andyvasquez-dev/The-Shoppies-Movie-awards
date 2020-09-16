@@ -164,6 +164,7 @@ function showResults(results){
 
 function movieSearch(){ // bring back all matches dating back to 1995
   document.querySelector('#output').classList.remove('hidden')
+    inputSearch.textContent = `Results for... "${titleInput.value}"`
     document.querySelector('.loader').style.display='flex'
   // }14
   const yearCheckEnd = 2000

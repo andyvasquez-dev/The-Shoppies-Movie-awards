@@ -18,7 +18,7 @@ If the user refreshes the page, their nominations will be saved and they can pic
 
 
 
-Once the ballot has been filled, a banner and submit button will be displayed to submit their selections.  
+Once the ballot has been filled, a banner and submit button will be displayed to submit their selections.
 ![alt tag](/media/full.png)
 
 
