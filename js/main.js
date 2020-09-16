@@ -3,12 +3,36 @@ const resultsList = document.querySelector('.resultsList')
 const nominationList = document.querySelector('.nominationsList')
 let buttons = document.querySelector('button')
 let nominationCount = 0;
-let nominations = []
+let nominationsArray = [];
 
 document.addEventListener('DOMContentLoaded', getLocalNominations);
 
+document.querySelector('.okButton').addEventListener('click', removeThanks)
+document.querySelector('.submitButton').addEventListener('click', submitButton)
+
+function removeThanks(){
+  document.querySelector('.thanksDetails').classList.add('hidden')
+  document.querySelector('.overlay').classList.add('hidden')
+  nominationCount=0;
+  nominationsArray=[];
+  document.querySelector('.countdown').textContent = `${5-nominationCount} votes left!`
+  window.localStorage.clear()
+}
+
+function submitButton(){
+  nominationList.innerHTML='';
+  resultsList.innerHTML='';
+  document.querySelector('.outputContainer').classList.add('hidden')
+  document.querySelector('.banner').classList.add('hidden')
+
+  document.querySelector('.overlay').classList.remove('hidden')
+  document.querySelector('.thanksDetails').classList.remove('hidden')
+  // document.querySelector('.okButton').classList.toggle('hidden')
+}
+
 function fullBallot(){
   document.querySelector('#complete').classList.toggle("hidden");
+  document.querySelector('.banner').classList.toggle("hidden")
 }
 
 function removeSelection(e){
@@ -26,13 +50,10 @@ function removeSelection(e){
     }
   }
 
-  nominations = nominations.filter((a,b)=>{ return ( a !== movieTitle)})
+  nominationsArray = nominationsArray.filter((a,b)=>{ return ( a !== movieTitle)})
 
   console.log(currentResultList);
 
-  // currentResultList.forEach((item, i) => {
-  //   console.log(item);
-  // });
   if (nominationCount>0) {
     nominationCount--;
     document.querySelector('.countdown').textContent = `${5-nominationCount} votes left!`
@@ -47,9 +68,7 @@ function removeSelection(e){
 function nominateSelection(e){
   let currentNominationList = document.querySelector('#nominations').children
 
-  if (nominationCount<=4 && (!nominations.includes(e.target.parentElement.parentElement.firstChild.textContent))){
-    nominations.push(e.target.parentElement.parentElement.firstChild.textContent)
-
+  if (nominationCount<=4 && (!nominationsArray.includes(e.target.parentElement.parentElement.firstChild.textContent))){
     e.target.classList.add('opacity');
 
     let listItem = document.createElement('li')
@@ -67,6 +86,7 @@ function nominateSelection(e){
     listItem.appendChild(removeButton)
     nominationList.appendChild(listItem)
 
+    nominationsArray.push(e.target.parentElement.parentElement.firstChild.textContent)
     nominationCount++;
     document.querySelector('.countdown').textContent = `${5-nominationCount} votes left!`
     if (nominationCount===5){
@@ -76,48 +96,30 @@ function nominateSelection(e){
 }
 
 function showResults(results){
-  //dom stuff...., reveals output section
-  document.querySelector('#output').classList.remove('hidden')
 
   inputSearch.textContent = `Results for... "${titleInput.value}"`
   titleInput.value="";
 
   results=results.sort( (a, b) => b.year - a.year)
-  // console.log(results);
 
-    // console.log(results[0])
     results.forEach((item, i) => {
     let listItem = document.createElement('li')
     listItem.classList.add('movieItem')
 
-    //drop down
     let movieHeaderSec=document.createElement('section')
     movieHeaderSec.classList.add('movieHeader')
-    // more info drop down
-    movieHeaderSec.addEventListener('click', e=>{
-      if(true){
-        // console.log(e.target== `<button class="nominate${i} opacity">Nominate</button>`);
-        // console.log(e.target);
-        movieHeaderSec.classList.toggle("active")
-        const movieDetails = movieHeaderSec.nextElementSibling;
-        if (movieHeaderSec.classList.contains('active')){
-          movieDetails.style.maxHeight = movieDetails.scrollHeight + "px"; //
-        }
-        else{
-          movieDetails.style.maxHeight = 0;
-        }
-      }
-
-    })
     let movieDetailsSec=document.createElement('section')
     movieDetailsSec.classList.add('movieDetails')
     let detailsSection=document.createElement('section')
     detailsSection.classList.add('details')
-    let testParagraph = document.createElement('p')
-    let testNode = document.createTextNode('')
-    testParagraph.appendChild(testNode)
-    detailsSection.appendChild(testParagraph)
+
+    let image = document.createElement('img')
+    image.src = item.poster;
+    image.classList.add('poster')
+    detailsSection.appendChild(image)
     movieDetailsSec.appendChild(detailsSection)
+
+
 
     //result information
     let movieTitle = document.createElement('h3')
@@ -131,8 +133,23 @@ function showResults(results){
     nominateButton.appendChild(nominateButtonNode)
     nominateButton.classList.add(`nominate${i}`)
     nominateButton.addEventListener("click", nominateSelection)
+    // let arrowButton = document.createElement('p')
+    // arrowButton.innerHTML = `&#9660;`
+    // arrowButton.classList.add('arrow')
+    // arrowButton.addEventListener('click', e => {
+    //   let arrow = document.querySelector('.arrow')
+    //   arrow.classList.toggle("active")
+    //   const movieDetails = movieHeaderSec.nextElementSibling;
+    //   if (arrow.classList.contains('active')){
+    //     movieDetails.style.maxHeight = movieDetails.scrollHeight + "px"; //
+    //   }
+    //   else{
+    //     movieDetails.style.maxHeight = 0;
+    //   }
+    // })
 
     buttonSection.appendChild(nominateButton)
+    // buttonSection.appendChild(arrowButton)
 
     movieHeaderSec.appendChild(movieTitle)
     movieHeaderSec.appendChild(buttonSection)
@@ -140,15 +157,16 @@ function showResults(results){
     listItem.appendChild(movieHeaderSec)
     listItem.appendChild(movieDetailsSec)
 
-
+    document.querySelector('.loader').style.display= 'none';
     resultsList.appendChild(listItem)
-
   });
-
 }
 
-function movieSearch(){ // bring back all matches dating back to 2000
-  const yearCheckEnd = 2014
+function movieSearch(){ // bring back all matches dating back to 1995
+  document.querySelector('#output').classList.remove('hidden')
+    document.querySelector('.loader').style.display='flex'
+  // }
+  const yearCheckEnd = 1995
   const currentYear = 2020
   const searchResults = []
 
@@ -168,11 +186,13 @@ function movieSearch(){ // bring back all matches dating back to 2000
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     // fetch(proxyurl+`http://www.omdbapi.com/?s=${title}&apikey=`)
     //proxyurl+ below
-    fetch(proxyurl +`www.omdbapi.com/?apikey=8ce696ca&t=${title}&y=${i}`)
+    fetch(proxyurl + `www.omdbapi.com/?apikey=8ce696ca&t=${title}&y=${i}`)
       .then(response=>response.json())
       .then(data=>{
-        // console.log(data);
-
+        console.log(data);
+        if (data.Response=== "False") {
+          document.querySelector('.nothingFound').style.display="block";
+        }
         counter++
         if ( data.Response!== "False"){
           // if(data.Poster !== 'N/A'){
@@ -194,11 +214,13 @@ function movieSearch(){ // bring back all matches dating back to 2000
               imbdRating : data.imdbRating
             })
           // }
+          document.querySelector('.nothingFound').style.display='none';
         }
         if (counter===(currentYear-yearCheckEnd)){
           showResults(searchResults);
         }
       })
+
   }
 }
 
@@ -233,14 +255,13 @@ function getLocalNominations(){
     listItem.appendChild(movieSelection);
     listItem.appendChild(removeButton)
     nominationList.appendChild(listItem)
-
+    nominationsArray= nominations
     if (nominationCount===5){
       fullBallot();
     }
   });
-
-
 }
+
 
 function removeLocalNominations(nomination){
   let nominations;

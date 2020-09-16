@@ -3,9 +3,26 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/7aa840a654.js" crossorigin="anonymous"></script>
   </head>
   <body>
+    <section class="overlay hidden">
+
+    </section>
+    <section class="thanksDetails hidden">
+      <i class="fa fa-check-circle" aria-hidden="true"></i>
+      <p>Thank You</p>
+      <p>Your nominations have successfully made it to the Shoppies</p>
+      <button type="button" name="button" class="okButton">ok</button>
+    </section>
+    <section class="">
+
+    </section>
+    <section class="banner hidden">
+      <p>You have reached the max amount of Nominations for the Shoppies</p>
+    </section>
     <section class="container">
       <h1> The Shoppies </h1>
       <section class="inputSection" id="">
@@ -18,7 +35,22 @@
           <p id="inputSearch"></p>
           <ul class="resultsList movieList">
 
+            <!-- <li class="movieItem">
+              <section class="movieHeader">
+
+              </section>
+              <section class="movieDetails">
+
+              </section>
+            </li> -->
+
           </ul>
+          <section class="loader hidden" id=""> <!-- add  hidden -->
+              <img src='loader.gif' class="hidden">
+          </section>
+          <section class="nothingFound hidden">
+            <p>No results were found matching your search</p>
+          </section>
         </section>
 
         <section id="nominations" class="nominations">

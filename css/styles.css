@@ -12,7 +12,9 @@ body{
   /* display: flex;
   justify-content: center;
   align-items: center; */
+  font-family: "Poppins", sans-serif;
   background-color: rgba(244, 246, 248, .8);
+  position: relative;
 }
 
 .container{
@@ -82,9 +84,6 @@ p{
   margin-top: 1.5rem;
   font-size:
 }
-.nominations ul, .results ul{
-  /* padding-top: 1.2rem; */
-}
 .nominations li, .results li{
   border-bottom: 1px solid rgba(233,234,235,1);
   font-size: 1.5rem;
@@ -115,9 +114,7 @@ button:focus{
   display: flex;
   flex-flow: wrap;
 }
-.hidden{
-  display: none;
-}
+
 li{
   margin-left: 4rem;
 }
@@ -127,13 +124,14 @@ li{
 
 .arrow{
   display: inline-block;
-  font-size: 2rem;
+  font-size: 1.7rem;
   border-radius: 50%;
   padding: 1rem;
   margin-right: .5rem;
 }
 .arrow:hover{
-  background-color: rgba(244, 246, 248, .5);
+  background-color: rgba(244, 246, 248, .7);
+  cursor: pointer;
 }
 button, .arrow:hover{
   cursor:pointer;
@@ -156,7 +154,8 @@ button, .arrow:hover{
   display: flex;
   justify-content: center;
   align-content: center;
-  padding-top: 2.3rem;
+  padding-top: 1rem;
+  padding-bottom: 2.7rem;
 }
 .nominationTitle{
   margin-left: .7rem;
@@ -168,13 +167,13 @@ button, .arrow:hover{
   padding-top: 1rem;
 }
 .countdown{
-  font-size: 1.7rem;
+  font-size: 2rem;
   margin-right: .7rem;
 }
 .submitButton{
   font-size:2.5rem;
   padding: 2.2rem;
-  margin-top: 4rem;
+  margin-top: 1.7rem;
 }
 .hidden{
   display: none;
@@ -190,20 +189,13 @@ button, .arrow:hover{
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-right: 4rem;
   margin-bottom: 1rem;
 }
-.movieHeader::after{
-  content:"\25BC";
-  font-size: 1.6rem;
-  position: absolute;
-  right: 1rem;
-  /* background-color: blue; */
-  padding-top: .66rem;
-  transition: transform 0.23s ease-in-out;
+.movieHeader.active{
+  transition: transform 30s ease-in-out;
 }
 
-.movieHeader.active::after{
+.arrow.active{
   transform:rotate(-180deg);
 }
 .movieDetails{
@@ -221,8 +213,89 @@ button, .arrow:hover{
 
 } */
 
-@media(max-width:767px){
-  html{
-    font-size: 14px;
-  }
+.poster{
+  width: 42%;
+  max-height:
+}
+
+.loader{
+  width: 100%;
+  justify-content: center;
+  align-self:center;
+  display: none;
+}
+.loader img{
+  width: 37%;
+  display: inline-block;
+}
+.banner{
+  background-color: rgb(160,71,43);
+  color:rgba(244, 246, 248, .5);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+.nothingFound p {
+  font-size: 2rem;
+  text-align: center;
+}
+.outputContainer button:hover{
+  color: rgba(160,71,43,.7)
+}
+.outputContainer{
+  transition: color 0.5s ease;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5);
+}
+.thanksDetails{
+    width: 375px;
+    height: 240px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -150px;
+    background-color: rgba(160,71,43,.97);
+    border-radius: 5px;
+    text-align: center;
+    z-index: 11; /* 1px higher than the overlay layer */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.thanksDetails p,.thanksDetails button{
+  font-size: 1.3rem;
+}
+.fa-check-circle{
+  font-size: 2rem;
+}
+
+.thanksDetails button{
+  background-color: rgba(244, 246, 248, .8);
+}
+.thanksDetails button:focus{
+  outline:none;
+}
+.fa-check-circle{
+  color: rgba(244, 246, 248, .8);
+}
+
+.results button{
+  margin-right: 1.5rem;
+}
+
+.hidden{
+  display: none;
 }
