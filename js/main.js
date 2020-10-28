@@ -11,12 +11,8 @@ document.querySelector('.okButton').addEventListener('click', removeThanks)
 document.querySelector('.submitButton').addEventListener('click', submitButton)
 
 function removeThanks(){
-  document.querySelector('.thanksDetails').classList.add('hidden')
-  document.querySelector('.overlay').classList.add('hidden')
-  nominationCount=0;
-  nominationsArray=[];
-  document.querySelector('.countdown').textContent = `${5-nominationCount} votes left!`
   window.localStorage.clear()
+  window.location.reload();
 }
 
 function submitButton(){
