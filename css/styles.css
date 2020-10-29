@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+
 *{
   padding:0;
   margin: 0;
@@ -7,8 +9,8 @@
 }
 
 body{
-  width: 100%;
-  height: 100vh;
+  /* width: 100%;
+  height: 100vh; */
   /* display: flex;
   justify-content: center;
   align-items: center; */
@@ -22,7 +24,6 @@ body{
   width: 82%;
   left: 8.5%;
   top:12.5%;
-
 }
 
 h1{
@@ -298,4 +299,9 @@ button, .arrow:hover{
 
 .hidden{
   display: none;
+}
+
+.container{
+  margin-top: 8%;
+  /* display: none; */
 }

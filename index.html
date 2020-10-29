@@ -5,11 +5,11 @@
     <title>The Shoppies</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles2.css">
     <script src="https://kit.fontawesome.com/7aa840a654.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <section class="overlay hidden">
-
     </section>
     <section class="thanksDetails hidden">
       <i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -18,59 +18,91 @@
       <button type="button" name="button" class="okButton">ok</button>
     </section>
     <section class="">
-
     </section>
     <section class="banner hidden">
       <p>You have reached the max amount of Nominations for the Shoppies</p>
     </section>
-    <section class="container">
-      <h1> The Shoppies </h1>
-      <section class="inputSection" id="">
-        <label for="Title">Movie Title</label>
-        <input type="text" name="" value="" placeholder="title" id="titleInput" class="titleInput">
-      </section>
 
-      <section class="outputContainer hidden" id="output">
-        <section id="results" class="results">
-          <p id="inputSearch"></p>
-          <ul class="resultsList movieList">
-
-            <!-- <li class="movieItem">
-              <section class="movieHeader">
-
-              </section>
-              <section class="movieDetails">
-
-              </section>
-            </li> -->
-
-          </ul>
-          <section class="loader hidden" id=""> <!-- add  hidden -->
-              <img src='media/loader.gif' class="hidden">
-          </section>
-          <section class="nothingFound hidden">
-            <p>No results were found matching your search</p>
-          </section>
-        </section>
-
-        <section id="nominations" class="nominations">
-          <section class="nominationHeaderSection">
-            <p class="nominationTitle">Nominations</p>
-            <p class="countdown">5 votes left!</p>
-          </section>
-          <ul class="nominationsList">
-
-          </ul>
-
-          <section class="complete hidden" id="complete">
-            <button type="button" name="submit" class="submitButton">Submit Nominations!</button>
-          </section>
-
-        </section>
-
-      </section>
+    <section class="introContainer fadeOut">
+      <div id="fly-in">
+        <div>
+          <span>Welcome to</span>
+        </div>
+        <div>
+          <span>the shoppies</span> movie nominations
+        </div>
+        <div>
+          <span>"A Movie awards for entrepreneurs"</span>
+        </div>
+        <div>
+          brought to you by<span>Andy Vasquez</span>
+        </div>
+        <!-- <div>
+          <span>Very</span>Cinematic
+        </div>
+        <div>
+          Fade Away<span>into the distance</span>
+        </div>
+        <div>
+          Still Loops <span> for eternity</span>
+        </div>
+        <div>
+          <span>Just CSS</span> and HTML
+        </div> -->
+      </div>
     </section>
 
+    <main class="fadeIn">
+      <section class="container">
+        <h1> The Shoppies </h1>
+        <section class="inputSection" id="">
+          <label for="Title">Movie Title</label>
+          <input type="text" name="" value="" placeholder="title" id="titleInput" class="titleInput">
+        </section>
+
+        <section class="outputContainer hidden" id="output">
+          <section id="results" class="results">
+            <p id="inputSearch"></p>
+            <ul class="resultsList movieList">
+
+              <!-- <li class="movieItem">
+                <section class="movieHeader">
+                </section>
+                <section class="movieDetails">
+                </section>
+              </li> -->
+
+            </ul>
+            <section class="loader hidden" id=""> <!-- add  hidden -->
+                <img src='media/loader.gif' class="hidden">
+            </section>
+            <section class="nothingFound hidden">
+              <p>No results were found matching your search</p>
+            </section>
+          </section>
+
+          <section id="nominations" class="nominations">
+            <section class="nominationHeaderSection">
+              <p class="nominationTitle">Nominations</p>
+              <p class="countdown">5 votes left!</p>
+            </section>
+            <ul class="nominationsList">
+
+            </ul>
+
+            <section class="complete hidden" id="complete">
+              <button type="button" name="submit" class="submitButton">Submit Nominations!</button>
+            </section>
+
+          </section>
+
+        </section>
+      </section>
+
+    </main>
+
+     <script type="text/javascript" src="js/intro.js">
+     </script>
     <script type="text/javascript" src="js/main.js">
     </script>
   </body>

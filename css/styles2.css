@@ -1,0 +1,70 @@
+
+.introContainer {
+  background-color: #111;
+  background-image: radial-gradient(#333, #111);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+  text-align: center;
+  width: 100vw;
+  height: 100%;
+  font-weight: 700;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#fly-in {
+  font-size: 5em;
+  margin: 40vh auto;
+  height: 20vh;
+  text-transform: uppercase;
+}
+
+#fly-in span {
+  display: block;
+  font-size: 6em;
+  opacity: .8;
+}
+
+#fly-in div {
+ position: fixed; <!--codepen.io/h-kod/-->
+  margin: 2vh 0;
+  opacity: 0;
+  left: 10vw;
+  width: 80vw;
+  animation: switch 12s linear 1;
+}
+
+#fly-in div:nth-child(2) { animation-delay: 3s}
+#fly-in div:nth-child(3) { animation-delay: 6s}
+#fly-in div:nth-child(4) { animation-delay: 9s}
+/* #fly-in div:nth-child(5) { animation-delay: 16s}
+#fly-in div:nth-child(6) { animation-delay: 20s}
+#fly-in div:nth-child(7) { animation-delay: 24s}
+#fly-in div:nth-child(8) { animation-delay: 28s} */
+
+@keyframes switch {
+    0% { opacity: 0;filter: blur(20px); transform:scale(12)}
+    3% { opacity: 1;filter: blur(0); transform:scale(1)}
+    10% { opacity: 1;filter: blur(0); transform:scale(.9)}
+    13% { opacity: 0;filter: blur(10px); transform:scale(.1)}
+    80% { opacity: 0}
+    100% { opacity: 0}
+}
+
+.fadeIn{
+  display:block;
+  opacity:0;
+  transition:opacity 3s ease-in;
+  -moz-transition: opacity 3s ease-in;
+  -webkit-transition: opacity 3s ease-in;
+  ;
+}
+.fadeOut{
+  display:block;
+  opacity:1;
+  transition:opacity 5s ease;
+  -moz-transition: opacity 3s ease-in;
+  -webkit-transition: opacity 3s ease-in;
+}
